@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 @FeignClient(
         name = "ms-user",
-        url = "http://localhost:8081"
+        url = "${user-service.url}"
 )
 public interface UserClient {
     @GetMapping("/api/users/me")

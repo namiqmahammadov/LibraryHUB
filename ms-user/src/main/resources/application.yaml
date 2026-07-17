@@ -1,32 +1,32 @@
 spring:
   rabbitmq:
-    host: localhost
+    host: rabbitmq
     port: 5672
     username: namiq
     password: 12345
     listener:
-     simple:
-       default-requeue-rejected: false
+      simple:
+        default-requeue-rejected: false
   data:
     redis:
-      host: localhost
+      host: redis
       port: 6379
       timeout: 60000
 
   application:
     name: ms-user
   datasource:
-    url: jdbc:postgresql://localhost:5432/users_db
+    url: jdbc:postgresql://users-postgres:5432/users_db
     username: postgres
     password: passsword
-    jpa:
-      open-in-view: false
-      properties:
-        hibernate:
-          format_sql: true
-          show_sql: true
+  jpa:
+    open-in-view: false
+    properties:
       hibernate:
-        ddl-auto: update
+        format_sql: true
+        show_sql: true
+    hibernate:
+      ddl-auto: update
 server:
   port: 8081
 springdoc:
