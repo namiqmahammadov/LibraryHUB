@@ -1,0 +1,40 @@
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: namiq
+    password: 12345
+    listener:
+     simple:
+       default-requeue-rejected: false
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 60000
+
+  application:
+    name: ms-user
+  datasource:
+    url: jdbc:postgresql://localhost:5432/users_db
+    username: postgres
+    password: passsword
+    jpa:
+      open-in-view: false
+      properties:
+        hibernate:
+          format_sql: true
+          show_sql: true
+      hibernate:
+        ddl-auto: update
+server:
+  port: 8081
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+jwt:
+  secret-key: jQxvZkQ7fQvP4H9Y6x1jYz8n8fN3WJrN2Lx4sQm9c7kR1vD5uP8wE6yA0mN2xL7o
+  access-token-expiration: 15 # in minutes
+  refresh-token-expiration: 1440 # in minutes (24 hours)
