@@ -14,9 +14,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class CategoryRequest {
-    @NotNull
+
+    @NotNull(message = "Category name cannot be null.")
     private CategoryName name;
-    @NotBlank
-    @Size(max=100)
+
+    @NotBlank(message = "Description cannot be blank.")
+    @Size(max = 100, message = "Description cannot exceed 100 characters.")
     private String description;
 }
