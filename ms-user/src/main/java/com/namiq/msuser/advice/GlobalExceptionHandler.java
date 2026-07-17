@@ -2,15 +2,17 @@ package com.namiq.msuser.advice;
 
 import com.namiq.msuser.dto.response.ErrorResponse;
 import com.namiq.msuser.exception.EmailAlreadyExistsException;
-import com.namiq.msuser.exception.InvalidRefreshTokenException;
 import com.namiq.msuser.exception.UserAlreadyExistsException;
 import com.namiq.msuser.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -29,19 +31,7 @@ public class GlobalExceptionHandler {
                 .body(response);
     }
 
-    @ExceptionHandler(InvalidRefreshTokenException.class)
-    public ResponseEntity<ErrorResponse> handle(InvalidRefreshTokenException ex) {
 
-        ErrorResponse response = ErrorResponse.builder()
-                .code("INVALID_REFRESH_TOKEN")
-                .message(ex.getMessage())
-                .timestamp(LocalDateTime.now())
-                .build();
-
-        return ResponseEntity
-                .status(HttpStatus.UNAUTHORIZED)
-                .body(response);
-    }
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<ErrorResponse> handle(UserAlreadyExistsException ex) {
 
@@ -67,5 +57,25 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
                 .body(response);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handle(
+            MethodArgumentNotValidException ex) {
+
+        List<String> errors = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(FieldError::getDefaultMessage)
+                .toList();
+
+        ErrorResponse response = ErrorResponse.builder()
+                .code("VALIDATION_ERROR")
+                .message("Validation failed")
+                .timestamp(LocalDateTime.now())
+                .errors(errors)
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

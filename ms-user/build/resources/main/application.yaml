@@ -36,5 +36,4 @@ springdoc:
     path: /swagger-ui.html
 jwt:
   secret-key: jQxvZkQ7fQvP4H9Y6x1jYz8n8fN3WJrN2Lx4sQm9c7kR1vD5uP8wE6yA0mN2xL7o
-  access-token-expiration: 15 # in minutes
-  refresh-token-expiration: 1440 # in minutes (24 hours)
+  access-token-expiration: 1440 # in minutes
