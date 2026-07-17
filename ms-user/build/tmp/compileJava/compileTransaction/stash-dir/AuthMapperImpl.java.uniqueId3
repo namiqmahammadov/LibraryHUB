@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-07-17T14:23:23+0400",
+    date = "2026-07-17T14:19:43+0400",
     comments = "version: 1.6.3, compiler: IncrementalProcessingEnvironment from gradle-java-compiler-worker-9.5.1.jar, environment: Java 21.0.7 (Oracle Corporation)"
 )
 @Component
@@ -36,12 +36,6 @@ public class AuthMapperImpl implements AuthMapper {
         }
 
         AuthRegisterResponse authRegisterResponse = new AuthRegisterResponse();
-
-        authRegisterResponse.setId( user.getId() );
-        authRegisterResponse.setUsername( user.getUsername() );
-        authRegisterResponse.setEmail( user.getEmail() );
-        authRegisterResponse.setRole( user.getRole() );
-        authRegisterResponse.setCreatedAt( user.getCreatedAt() );
 
         return authRegisterResponse;
     }

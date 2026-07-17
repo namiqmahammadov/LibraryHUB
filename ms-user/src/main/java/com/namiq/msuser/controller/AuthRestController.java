@@ -5,6 +5,7 @@ import com.namiq.msuser.dto.request.AuthLoginRequest;
 import com.namiq.msuser.dto.request.AuthRegisterRequest;
 import com.namiq.msuser.dto.request.RefreshTokenRequest;
 import com.namiq.msuser.dto.response.AuthLoginResponse;
+import com.namiq.msuser.dto.response.AuthRegisterResponse;
 import com.namiq.msuser.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +25,9 @@ public class AuthRestController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<Void> register(@Valid @RequestBody AuthRegisterRequest registerRequest) {
-        authService.register(registerRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<AuthRegisterResponse> register(@Valid @RequestBody AuthRegisterRequest registerRequest) {
+        AuthRegisterResponse response= authService.register(registerRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     @PostMapping("/login")
     public ResponseEntity<AuthLoginResponse> login(@Valid @RequestBody AuthLoginRequest loginRequest){

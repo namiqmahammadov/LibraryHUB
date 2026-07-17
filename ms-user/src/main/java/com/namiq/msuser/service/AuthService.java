@@ -7,6 +7,7 @@ import com.namiq.msuser.dto.request.AuthLoginRequest;
 import com.namiq.msuser.dto.request.AuthRegisterRequest;
 import com.namiq.msuser.dto.request.RefreshTokenRequest;
 import com.namiq.msuser.dto.response.AuthLoginResponse;
+import com.namiq.msuser.dto.response.AuthRegisterResponse;
 import com.namiq.msuser.enums.Role;
 import com.namiq.msuser.exception.EmailAlreadyExistsException;
 import com.namiq.msuser.exception.InvalidRefreshTokenException;
@@ -36,7 +37,7 @@ public class AuthService {
     private final AuthMapper authMapper;
 
 
-    public void register(@Valid AuthRegisterRequest registerRequest) {
+    public AuthRegisterResponse register(@Valid AuthRegisterRequest registerRequest) {
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
             throw new EmailAlreadyExistsException(
                     "Email already exists: " + registerRequest.getEmail()
@@ -54,7 +55,7 @@ public class AuthService {
         user.setRole(Role.ROLE_USER);
         user.setIsActive(true);
         userRepository.save(user);
-
+        return authMapper.toResponse(user);
 
     }
 
@@ -75,7 +76,7 @@ public class AuthService {
         tokenStorageService.storeAccessToken(user.getUsername(), accessToken);
         tokenStorageService.storeRefreshToken(user.getUsername(), refreshToken);
         user.setLastLoginTime(LocalDateTime.now());
-           userRepository.save(user);
+        userRepository.save(user);
         return AuthLoginResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
