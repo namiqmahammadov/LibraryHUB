@@ -22,12 +22,11 @@ class UserServiceSpec extends Specification {
     AuthenticationManager authenticationManager = Mock()
     JwtService jwtService = Mock()
     TokenStorageService tokenStorageService = Mock()
-    CustomUserDetailsService customUserDetailsService = Mock()
     UserRepository userRepository = Mock()
     PasswordEncoder passwordEncoder = Mock()
     AuthMapper authMapper = Mock()
     UserMapper userMapper = Mock()
-    AuthService authService = new AuthService(authenticationManager, jwtService, tokenStorageService, customUserDetailsService, userRepository, passwordEncoder, authMapper);
+    AuthService authService = new AuthService(authenticationManager, jwtService, tokenStorageService, userRepository, passwordEncoder, authMapper);
     UserService userService = new UserService(userRepository, userMapper)
 
     def "should throw exception when email already exists"() {
