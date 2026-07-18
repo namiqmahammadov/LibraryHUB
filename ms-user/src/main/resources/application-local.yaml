@@ -1,0 +1,19 @@
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: namiq
+    password: 12345
+    listener:
+      simple:
+        default-requeue-rejected: false
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 60000
+
+  datasource:
+    url: jdbc:postgresql://localhost:5436/users_db
+    username: postgres
+    password: passsword

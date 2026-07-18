@@ -74,34 +74,30 @@ class UserServiceSpec extends Specification {
     }
 
     def "should login successfully"() {
-
         given:
         def request = new AuthLoginRequest(
                 username: "namiq",
                 password: "12345"
         )
 
-        def user = new User(
-                username: "namiq"
-        )
-
+        def user = new User(username: "namiq")
         def authentication = Mock(Authentication)
 
         1 * authenticationManager.authenticate(_ as UsernamePasswordAuthenticationToken) >> authentication
         1 * authentication.getPrincipal() >> user
 
         1 * jwtService.generateAccessToken(user) >> "access-token"
-        1 * jwtService.generateRefreshToken(user) >> "refresh-token"
+        1 * tokenStorageService.storeAccessToken("namiq", "access-token")
+        1 * userRepository.save(user)
+        1 * jwtService.getAccessTokenExpiration() >> 15   // nümunə olaraq
 
         when:
         def response = authService.login(request)
 
         then:
         response.accessToken == "access-token"
-        response.refreshToken == "refresh-token"
-
-        1 * tokenStorageService.storeAccessToken("namiq", "access-token")
-        1 * tokenStorageService.storeRefreshToken("namiq", "refresh-token")
+        response.tokenType == "Bearer"
+        response.expiresIn == 900
     }
 
     def "should update profile successfully"() {

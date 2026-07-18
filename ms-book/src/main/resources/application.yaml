@@ -1,12 +1,9 @@
 spring:
   application:
     name: ms-book
-
-  datasource:
-    url: jdbc:postgresql://books-postgres:5432/books_db
-    username: postgres
-    password: passsword
-
+  profiles:
+    active:
+      -docker
   jpa:
     open-in-view: false
     properties:
@@ -16,19 +13,8 @@ spring:
     hibernate:
       ddl-auto: update
 
-  data:
-    redis:
-      host: redis
-      port: 6379
-
   cache:
     type: redis
-
-  rabbitmq:
-    host: rabbitmq
-    port: 5672
-    username: namiq
-    password: 12345
 
 server:
   port: 8082
@@ -40,4 +26,4 @@ springdoc:
     path: /swagger-ui.html
 
 user-service:
-  url: http://ms-user:8081
+  url: http://localhost:8081

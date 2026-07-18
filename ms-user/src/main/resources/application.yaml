@@ -1,24 +1,9 @@
 spring:
-  rabbitmq:
-    host: rabbitmq
-    port: 5672
-    username: namiq
-    password: 12345
-    listener:
-      simple:
-        default-requeue-rejected: false
-  data:
-    redis:
-      host: redis
-      port: 6379
-      timeout: 60000
-
   application:
     name: ms-user
-  datasource:
-    url: jdbc:postgresql://users-postgres:5432/users_db
-    username: postgres
-    password: passsword
+  profiles:
+    active:
+      - docker
   jpa:
     open-in-view: false
     properties:
