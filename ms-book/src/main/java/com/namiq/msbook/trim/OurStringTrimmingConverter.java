@@ -1,4 +1,4 @@
-package com.namiq.msuser.trim;
+package com.namiq.msbook.trim;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,6 +11,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
+
 @Configuration
 @RequiredArgsConstructor
 public class OurStringTrimmingConverter implements WebMvcConfigurer {
@@ -33,8 +34,10 @@ public class OurStringTrimmingConverter implements WebMvcConfigurer {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         SimpleModule module = new SimpleModule();
-        module.addDeserializer(String.class,
-                new StringTrimmingDeserializer(String.class));
+        module.addDeserializer(
+                String.class,
+                new StringTrimmingDeserializer(String.class)
+        );
 
         mapper.registerModule(module);
 

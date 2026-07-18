@@ -15,6 +15,7 @@ public interface AuthMapper {
     @Mapping(target = "isActive", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "lastLoginTime", ignore = true)
     User toUser(AuthRegisterRequest request);
 
     AuthRegisterResponse toResponse(User user);
