@@ -23,5 +23,6 @@ public class Borrow {
     private LocalDateTime    borrowAt;
     private LocalDate dueDate;
     private LocalDateTime returnAt;
+    @Enumerated(EnumType.STRING)
     private Status status;
 }
