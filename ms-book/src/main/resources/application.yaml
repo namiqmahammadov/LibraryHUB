@@ -3,7 +3,7 @@ spring:
     name: ms-book
   profiles:
     active:
-      -docker
+      - docker
   jpa:
     open-in-view: false
     properties:
